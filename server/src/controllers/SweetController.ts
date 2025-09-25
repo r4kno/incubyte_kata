@@ -7,7 +7,7 @@ import { body, query, validationResult } from 'express-validator';
 
 const router = express.Router();
 
-// Validation middleware
+// Input validation rules
 const createSweetValidation = [
   body('name').notEmpty().withMessage('Name is required'),
   body('category').isIn(['chocolate', 'candy', 'gum', 'lollipop', 'other']).withMessage('Invalid category'),
@@ -28,10 +28,9 @@ const restockValidation = [
   body('quantity').isInt({ min: 1 }).withMessage('Quantity must be at least 1'),
 ];
 
-// POST /api/sweets - Add a new sweet (Protected)
+// Add new sweet
 router.post('/', authenticateToken, requireAdmin, createSweetValidation, async (req: AuthenticatedRequest, res: Response) => {
   try {
-    // Check validation errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({

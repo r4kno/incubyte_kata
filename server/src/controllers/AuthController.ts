@@ -5,7 +5,7 @@ import { AuthService } from '../services/AuthService';
 const router = express.Router();
 const authService = new AuthService();
 
-// Validation middleware
+// Input validation rules
 const registerValidation = [
   body('email').isEmail().withMessage('Please provide a valid email'),
   body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
@@ -17,10 +17,9 @@ const loginValidation = [
   body('password').notEmpty().withMessage('Password is required'),
 ];
 
-// Register route
+// User registration
 router.post('/register', registerValidation, async (req: Request, res: Response) => {
   try {
-    // Check validation errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({
@@ -47,7 +46,7 @@ router.post('/register', registerValidation, async (req: Request, res: Response)
   }
 });
 
-// Login route
+// User authentication
 router.post('/login', loginValidation, async (req: Request, res: Response) => {
   try {
     // Check validation errors

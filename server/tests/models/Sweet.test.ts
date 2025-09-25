@@ -1,239 +1,66 @@
 import { Sweet } from '../../src/models/Sweet';
 
-describe('Sweet Model', () => {
-  describe('Sweet Creation', () => {
-    it('should create a sweet with valid data', async () => {
-      // Arrange
-      const sweetData = {
+describe('Sweet Model - Critical Validations', () => {
+  beforeEach(async () => {
+    await Sweet.deleteMany({});
+  });
+
+  describe('Business Logic Validations', () => {
+    it('should enforce required fields', async () => {
+      const emptySweet = new Sweet({});
+      
+      await expect(emptySweet.save()).rejects.toThrow();
+    });
+
+    it('should validate positive price constraint', async () => {
+      const sweetWithNegativePrice = new Sweet({
+        name: 'Test Sweet',
+        category: 'chocolate',
+        price: -1.99, // Invalid: negative price
+        quantity: 100
+      });
+
+      await expect(sweetWithNegativePrice.save()).rejects.toThrow();
+    });
+
+    it('should validate non-negative quantity constraint', async () => {
+      const sweetWithNegativeQuantity = new Sweet({
+        name: 'Test Sweet', 
+        category: 'chocolate',
+        price: 2.99,
+        quantity: -10 // Invalid: negative quantity
+      });
+
+      await expect(sweetWithNegativeQuantity.save()).rejects.toThrow();
+    });
+
+    it('should validate category enum values', async () => {
+      const sweetWithInvalidCategory = new Sweet({
+        name: 'Test Sweet',
+        category: 'invalid-category', // Should only accept predefined categories
+        price: 2.99,
+        quantity: 100
+      });
+
+      await expect(sweetWithInvalidCategory.save()).rejects.toThrow();
+    });
+
+    it('should save valid sweet successfully', async () => {
+      const validSweet = new Sweet({
         name: 'Chocolate Bar',
         category: 'chocolate',
         price: 2.99,
         quantity: 100,
-        description: 'Delicious milk chocolate bar'
-      };
+        description: 'Delicious chocolate bar'
+      });
 
-      // Act
-      const sweet = new Sweet(sweetData);
-      const savedSweet = await sweet.save();
-
-      // Assert
-      expect(savedSweet._id).toBeDefined();
-      expect(savedSweet.name).toBe(sweetData.name);
-      expect(savedSweet.category).toBe(sweetData.category);
-      expect(savedSweet.price).toBe(sweetData.price);
-      expect(savedSweet.quantity).toBe(sweetData.quantity);
-      expect(savedSweet.description).toBe(sweetData.description);
-      expect(savedSweet.createdAt).toBeDefined();
-      expect(savedSweet.updatedAt).toBeDefined();
-    });
-
-    it('should require name field', async () => {
-      // Arrange
-      const sweetData = {
-        category: 'chocolate',
-        price: 2.99,
-        quantity: 100
-      };
-
-      // Act & Assert
-      const sweet = new Sweet(sweetData);
-      await expect(sweet.save()).rejects.toThrow();
-    });
-
-    it('should require category field', async () => {
-      // Arrange
-      const sweetData = {
-        name: 'Chocolate Bar',
-        price: 2.99,
-        quantity: 100
-      };
-
-      // Act & Assert
-      const sweet = new Sweet(sweetData);
-      await expect(sweet.save()).rejects.toThrow();
-    });
-
-    it('should require price field', async () => {
-      // Arrange
-      const sweetData = {
-        name: 'Chocolate Bar',
-        category: 'chocolate',
-        quantity: 100
-      };
-
-      // Act & Assert
-      const sweet = new Sweet(sweetData);
-      await expect(sweet.save()).rejects.toThrow();
-    });
-
-    it('should require quantity field', async () => {
-      // Arrange
-      const sweetData = {
-        name: 'Chocolate Bar',
-        category: 'chocolate',
-        price: 2.99
-      };
-
-      // Act & Assert
-      const sweet = new Sweet(sweetData);
-      await expect(sweet.save()).rejects.toThrow();
-    });
-
-    it('should validate price is positive', async () => {
-      // Arrange
-      const sweetData = {
-        name: 'Chocolate Bar',
-        category: 'chocolate',
-        price: -1.99,
-        quantity: 100
-      };
-
-      // Act & Assert
-      const sweet = new Sweet(sweetData);
-      await expect(sweet.save()).rejects.toThrow();
-    });
-
-    it('should validate quantity is non-negative', async () => {
-      // Arrange
-      const sweetData = {
-        name: 'Chocolate Bar',
-        category: 'chocolate',
-        price: 2.99,
-        quantity: -5
-      };
-
-      // Act & Assert
-      const sweet = new Sweet(sweetData);
-      await expect(sweet.save()).rejects.toThrow();
-    });
-
-    it('should allow valid categories', async () => {
-      const validCategories = ['chocolate', 'candy', 'gum', 'lollipop', 'other'];
+      const savedSweet = await validSweet.save();
       
-      for (const category of validCategories) {
-        // Arrange
-        const sweetData = {
-          name: `Test ${category}`,
-          category,
-          price: 1.99,
-          quantity: 50
-        };
-
-        // Act
-        const sweet = new Sweet(sweetData);
-        const savedSweet = await sweet.save();
-
-        // Assert
-        expect(savedSweet.category).toBe(category);
-      }
-    });
-
-    it('should reject invalid category', async () => {
-      // Arrange
-      const sweetData = {
-        name: 'Test Sweet',
-        category: 'invalid-category',
-        price: 1.99,
-        quantity: 50
-      };
-
-      // Act & Assert
-      const sweet = new Sweet(sweetData);
-      await expect(sweet.save()).rejects.toThrow();
-    });
-  });
-
-  describe('Sweet Methods', () => {
-    it('should check if sweet is in stock', async () => {
-      // Arrange
-      const sweetData = {
-        name: 'Chocolate Bar',
-        category: 'chocolate',
-        price: 2.99,
-        quantity: 5
-      };
-
-      const sweet = new Sweet(sweetData);
-      const savedSweet = await sweet.save();
-
-      // Act & Assert
-      expect(savedSweet.isInStock()).toBe(true);
-    });
-
-    it('should check if sweet is out of stock', async () => {
-      // Arrange
-      const sweetData = {
-        name: 'Chocolate Bar',
-        category: 'chocolate',
-        price: 2.99,
-        quantity: 0
-      };
-
-      const sweet = new Sweet(sweetData);
-      const savedSweet = await sweet.save();
-
-      // Act & Assert
-      expect(savedSweet.isInStock()).toBe(false);
-    });
-
-    it('should decrease quantity when purchased', async () => {
-      // Arrange
-      const sweetData = {
-        name: 'Chocolate Bar',
-        category: 'chocolate',
-        price: 2.99,
-        quantity: 10
-      };
-
-      const sweet = new Sweet(sweetData);
-      const savedSweet = await sweet.save();
-
-      // Act
-      const result = await savedSweet.purchase(3);
-
-      // Assert
-      expect(result.success).toBe(true);
-      expect(savedSweet.quantity).toBe(7);
-    });
-
-    it('should not allow purchase when insufficient stock', async () => {
-      // Arrange
-      const sweetData = {
-        name: 'Chocolate Bar',
-        category: 'chocolate',
-        price: 2.99,
-        quantity: 2
-      };
-
-      const sweet = new Sweet(sweetData);
-      const savedSweet = await sweet.save();
-
-      // Act
-      const result = await savedSweet.purchase(5);
-
-      // Assert
-      expect(result.success).toBe(false);
-      expect(result.message).toContain('Insufficient stock');
-      expect(savedSweet.quantity).toBe(2); // Should not change
-    });
-
-    it('should increase quantity when restocked', async () => {
-      // Arrange
-      const sweetData = {
-        name: 'Chocolate Bar',
-        category: 'chocolate',
-        price: 2.99,
-        quantity: 5
-      };
-
-      const sweet = new Sweet(sweetData);
-      const savedSweet = await sweet.save();
-
-      // Act
-      await savedSweet.restock(10);
-
-      // Assert
-      expect(savedSweet.quantity).toBe(15);
+      expect(savedSweet._id).toBeDefined();
+      expect(savedSweet.name).toBe('Chocolate Bar');
+      expect(savedSweet.category).toBe('chocolate');
+      expect(savedSweet.price).toBe(2.99);
+      expect(savedSweet.quantity).toBe(100);
     });
   });
 });

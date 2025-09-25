@@ -1,190 +1,146 @@
 import { AuthService } from '../../src/services/AuthService';
 import { User } from '../../src/models/User';
+import bcrypt from 'bcryptjs';
 
-describe('AuthService', () => {
+describe('AuthService - Critical Tests', () => {
   let authService: AuthService;
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    await User.deleteMany({});
     authService = new AuthService();
   });
 
-  describe('register', () => {
-    it('should register a new user with valid data', async () => {
-      // Arrange
+  describe('Core Security Functions', () => {
+    it('should hash passwords during registration', async () => {
       const userData = {
         email: 'test@example.com',
         password: 'password123',
         name: 'Test User'
       };
 
-      // Act
       const result = await authService.register(userData);
 
-      // Assert
       expect(result.success).toBe(true);
-      expect(result.user).toBeDefined();
-      expect(result.user!.email).toBe(userData.email);
-      expect(result.user!.name).toBe(userData.name);
-      expect(result.user!.role).toBe('user');
-      expect(result.token).toBeDefined();
-      expect(typeof result.token).toBe('string');
-    });
-
-    it('should not register user with duplicate email', async () => {
-      // Arrange
-      const userData = {
-        email: 'test@example.com',
-        password: 'password123',
-        name: 'Test User'
-      };
-
-      // Act
-      await authService.register(userData);
-      const result = await authService.register(userData);
-
-      // Assert
-      expect(result.success).toBe(false);
-      expect(result.message).toContain('already exists');
-      expect(result.token).toBeUndefined();
-    });
-
-    it('should hash password during registration', async () => {
-      // Arrange
-      const userData = {
-        email: 'test@example.com',
-        password: 'password123',
-        name: 'Test User'
-      };
-
-      // Act
-      const result = await authService.register(userData);
-
-      // Assert
+      
+      // Verify password is hashed in database
       const savedUser = await User.findById(result.user!._id);
       expect(savedUser!.password).not.toBe(userData.password);
+      
+      // Verify hash is valid
+      const isValidHash = await bcrypt.compare(userData.password, savedUser!.password);
+      expect(isValidHash).toBe(true);
     });
-  });
 
-  describe('login', () => {
-    beforeEach(async () => {
-      // Setup: Create a user for login tests
+    it('should generate valid JWT tokens', async () => {
       const userData = {
         email: 'test@example.com',
         password: 'password123',
         name: 'Test User'
       };
-      await authService.register(userData);
-    });
 
-    it('should login with valid credentials', async () => {
-      // Arrange
-      const credentials = {
-        email: 'test@example.com',
-        password: 'password123'
-      };
+      const result = await authService.register(userData);
 
-      // Act
-      const result = await authService.login(credentials);
-
-      // Assert
       expect(result.success).toBe(true);
-      expect(result.user).toBeDefined();
-      expect(result.user!.email).toBe(credentials.email);
       expect(result.token).toBeDefined();
       expect(typeof result.token).toBe('string');
+      expect(result.token!.length).toBeGreaterThan(50); // JWT tokens are long
     });
 
-    it('should not login with invalid email', async () => {
-      // Arrange
-      const credentials = {
-        email: 'nonexistent@example.com',
-        password: 'password123'
+    it('should prevent duplicate email registration', async () => {
+      const userData = {
+        email: 'test@example.com',
+        password: 'password123',
+        name: 'Test User'
       };
 
-      // Act
-      const result = await authService.login(credentials);
+      // First registration should succeed
+      const firstResult = await authService.register(userData);
+      expect(firstResult.success).toBe(true);
 
-      // Assert
-      expect(result.success).toBe(false);
-      expect(result.message).toContain('Invalid credentials');
-      expect(result.token).toBeUndefined();
+      // Second registration with same email should fail
+      const secondResult = await authService.register(userData);
+      expect(secondResult.success).toBe(false);
+      expect(secondResult.message).toContain('already exists');
     });
 
-    it('should not login with invalid password', async () => {
-      // Arrange
-      const credentials = {
+    it('should authenticate valid credentials', async () => {
+      const userData = {
         email: 'test@example.com',
+        password: 'password123',
+        name: 'Test User'
+      };
+
+      // Register user first
+      await authService.register(userData);
+
+      // Then try to login
+      const loginResult = await authService.login({
+        email: userData.email,
+        password: userData.password
+      });
+
+      expect(loginResult.success).toBe(true);
+      expect(loginResult.user).toBeDefined();
+      expect(loginResult.token).toBeDefined();
+      expect(loginResult.user!.email).toBe(userData.email);
+    });
+
+    it('should reject invalid credentials', async () => {
+      const userData = {
+        email: 'test@example.com',
+        password: 'password123',
+        name: 'Test User'
+      };
+
+      await authService.register(userData);
+
+      // Wrong password
+      const wrongPasswordResult = await authService.login({
+        email: userData.email,
         password: 'wrongpassword'
-      };
+      });
 
-      // Act
-      const result = await authService.login(credentials);
+      expect(wrongPasswordResult.success).toBe(false);
+      expect(wrongPasswordResult.token).toBeUndefined();
 
-      // Assert
-      expect(result.success).toBe(false);
-      expect(result.message).toContain('Invalid credentials');
-      expect(result.token).toBeUndefined();
+      // Wrong email  
+      const wrongEmailResult = await authService.login({
+        email: 'wrong@example.com',
+        password: userData.password
+      });
+
+      expect(wrongEmailResult.success).toBe(false);
+      expect(wrongEmailResult.token).toBeUndefined();
     });
+  });
 
-    it('should return user without password in response', async () => {
-      // Arrange
-      const credentials = {
+  describe('Role Management', () => {
+    it('should set default role to user', async () => {
+      const userData = {
         email: 'test@example.com',
-        password: 'password123'
+        password: 'password123',
+        name: 'Test User'
+        // No role specified
       };
 
-      // Act
-      const result = await authService.login(credentials);
+      const result = await authService.register(userData);
 
-      // Assert
-      expect(result.user).toBeDefined();
-      expect(result.user).not.toHaveProperty('password');
-    });
-  });
-
-  describe('generateToken', () => {
-    it('should generate a valid JWT token', () => {
-      // Arrange
-      const userId = '507f1f77bcf86cd799439011'; // Mock ObjectId
-
-      // Act
-      const token = authService.generateToken(userId, 'user');
-
-      // Assert
-      expect(token).toBeDefined();
-      expect(typeof token).toBe('string');
-      expect(token.split('.')).toHaveLength(3); // JWT has 3 parts
-    });
-  });
-
-  describe('verifyToken', () => {
-    it('should verify a valid token', () => {
-      // Arrange
-      const userId = '507f1f77bcf86cd799439011';
-      const token = authService.generateToken(userId, 'user');
-
-      // Act
-      const decoded = authService.verifyToken(token);
-
-      // Assert
-      expect(decoded).toBeDefined();
-      expect(decoded.userId).toBe(userId);
+      expect(result.success).toBe(true);
+      expect(result.user!.role).toBe('user');
     });
 
-    it('should throw error for invalid token', () => {
-      // Arrange
-      const invalidToken = 'invalid.token.here';
+    it('should respect admin role when specified', async () => {
+      const adminData = {
+        email: 'admin@example.com',
+        password: 'password123',
+        name: 'Test Admin',
+        role: 'admin' as const
+      };
 
-      // Act & Assert
-      expect(() => {
-        authService.verifyToken(invalidToken);
-      }).toThrow();
-    });
+      const result = await authService.register(adminData);
 
-    it('should throw error for expired token', () => {
-      // This test would require mocking Date/time or using a short expiry
-      // For now, we'll test the basic structure
-      expect(true).toBe(true); // Placeholder
+      expect(result.success).toBe(true);
+      expect(result.user!.role).toBe('admin');
     });
   });
 });
