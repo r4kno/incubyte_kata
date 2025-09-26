@@ -7,13 +7,14 @@ const Register: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [role, setRole] = useState<'user' | 'admin'>('user');
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const setCookie = (name: string, value: string, days: number = 7) => {
         const expires = new Date();
         expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
-        document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/;SameSite=Lax`;
+        document.cookie = `${name}=${encodeURIComponent(value)};expires=${expires.toUTCString()};path=/;SameSite=Lax`;
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -33,12 +34,12 @@ const Register: React.FC = () => {
         setIsLoading(true);
         
         try {
-            // Register user
+            // Register user with selected role
             const registerResponse = await axios.post("http://localhost:5000/api/auth/register", {
                 name,
                 email,
                 password,
-                role: 'user'
+                role: role
             }, { withCredentials: true });
 
             
@@ -63,7 +64,12 @@ const Register: React.FC = () => {
                         
                         alert(`🎉 Welcome to Sweet Treats, ${user.name}! Your account has been created successfully!`);
                         
-                        navigate('/userDashboard');
+                        // Navigate based on user role
+                        if (user.role === 'admin') {
+                            navigate('/adminDashboard');
+                        } else {
+                            navigate('/userDashboard');
+                        }
                     }
                 } catch (loginError) {
                     alert('Account created successfully, but auto-login failed. Please login manually.');
@@ -71,7 +77,6 @@ const Register: React.FC = () => {
                 }
             }
         } catch (error) {
-
             if (axios.isAxiosError(error)) {
                 if (error.response?.data?.message) {
                     alert(error.response.data.message);
@@ -187,12 +192,31 @@ const Register: React.FC = () => {
                         />
                     </div>
 
-                    {/* Role info (read-only since it's always 'user') */}
-                    <div className="bg-orange-50 border-2 border-orange-200 rounded-xl p-3">
-                        <div className="flex items-center text-sm text-orange-700">
+                    {/* Role Selection Dropdown */}
+                    <div>
+                        <label htmlFor="role" className="block text-sm font-semibold text-pink-700 mb-2 flex items-center">
                             <span className="mr-2">👥</span>
-                            <span className="font-semibold">Account Type:</span>
-                            <span className="ml-2 bg-orange-100 px-2 py-1 rounded-full text-xs font-bold">Customer</span>
+                            Account Type
+                        </label>
+                        <select
+                            id="role"
+                            value={role}
+                            onChange={(e) => setRole(e.target.value as 'user' | 'admin')}
+                            className="w-full px-4 py-3 border-2 border-pink-200 rounded-xl focus:ring-2 focus:ring-pink-400 focus:border-pink-400 transition-all outline-none bg-pink-50/30 hover:bg-pink-50/50 cursor-pointer"
+                        >
+                            <option value="user">🛍️ Customer - Browse and purchase sweets</option>
+                            <option value="admin">👑 Admin - Manage shop inventory and users</option>
+                        </select>
+                        
+                        {/* Dynamic role description */}
+                        <div className="mt-2 p-3 rounded-lg bg-gradient-to-r from-pink-50 to-orange-50 border border-pink-200">
+                            <p className="text-sm text-pink-700">
+                                {role === 'user' ? (
+                                    <span>🛍️ As a customer, you can browse and purchase delicious sweets!</span>
+                                ) : (
+                                    <span>👑 As an admin, you can manage the shop's inventory and oversee operations!</span>
+                                )}
+                            </p>
                         </div>
                     </div>
                     
@@ -208,8 +232,8 @@ const Register: React.FC = () => {
                             </div>
                         ) : (
                             <div className="flex items-center justify-center">
-                                <span className="mr-2">🎉</span>
-                                Join the Sweet Family
+                                <span className="mr-2">{role === 'admin' ? '👑' : '🎉'}</span>
+                                {role === 'admin' ? 'Join as Sweet Shop Admin' : 'Join the Sweet Family'}
                             </div>
                         )}
                     </button>

@@ -134,11 +134,6 @@ const Login: React.FC = () => {
                         )}
                     </button>
                 </form>
-
-                <div className="bg-gray-750 text-m text-gray-800 mt-6 p-3 rounded-lg text-center border border-pink-200">
-                    Admin Credentials: <br />
-                    admin@kata.com | admin123
-                </div>
                 
                 <div className="mt-8 text-center space-y-3">
                     <a href="#" className="block text-sm text-pink-600 hover:text-pink-800 transition-colors font-medium">
