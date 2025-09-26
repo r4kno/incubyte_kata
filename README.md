@@ -192,6 +192,22 @@ npm run test:run
 
 # Run tests with coverage report
 npm run test:coverage
+
+## 📷 UI Screenshots
+
+![Screenshot 1](Screenshots/Screenshot%202025-09-26%20173856.png)
+
+![Screenshot 2](Screenshots/Screenshot%202025-09-26%20183251.png)
+
+![Screenshot 3](Screenshots/Screenshot%202025-09-26%20183311.png)
+
+![Screenshot 4](Screenshots/Screenshot%202025-09-26%20183326.png)
+
+![Screenshot 5](Screenshots/Screenshot%202025-09-26%20183331.png)
+
+![Screenshot 6](Screenshots/Screenshot%202025-09-26%20183340.png)
+
+![Screenshot 7](Screenshots/Screenshot%202025-09-26%20183350.png)
 ```
 
 ## 📊 Test Coverage
@@ -257,22 +273,6 @@ After setting up the database, you can create an admin account through the regis
    - Check token expiration settings
 
 
-
-## 📷 UI Screenshots
-
-![Screenshot 1](Screenshots/Screenshot%202025-09-26%20173856.png)
-
-![Screenshot 2](Screenshots/Screenshot%202025-09-26%20183251.png)
-
-![Screenshot 3](Screenshots/Screenshot%202025-09-26%20183311.png)
-
-![Screenshot 4](Screenshots/Screenshot%202025-09-26%20183326.png)
-
-![Screenshot 5](Screenshots/Screenshot%202025-09-26%20183331.png)
-
-![Screenshot 6](Screenshots/Screenshot%202025-09-26%20183340.png)
-
-![Screenshot 7](Screenshots/Screenshot%202025-09-26%20183350.png)
 
 
 ## 🤖 AI-Assisted Development
