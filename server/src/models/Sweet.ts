@@ -26,6 +26,11 @@ const sweetSchema = new Schema<SweetDocument>(
     description: {
       type: String,
       trim: true
+    },
+    imageUrl: {
+      type: String,
+      trim: true,
+      required: false
     }
   },
   {

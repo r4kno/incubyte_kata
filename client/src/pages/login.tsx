@@ -57,7 +57,7 @@ const Login: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-pink-100 via-orange-50 to-yellow-100 flex items-center justify-center p-4 relative overflow-hidden">
+        <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-orange-50 flex items-center justify-center p-4 relative overflow-hidden">
             {/* Sweet background decorations */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-10 left-10 text-6xl animate-bounce" style={{ animationDelay: '0s' }}>🍭</div>
@@ -72,7 +72,7 @@ const Login: React.FC = () => {
                 {/* Logo/Header */}
                 <div className="text-center mb-8">
                     <div className="text-6xl mb-4">🍯</div>
-                    <h1 className="text-3xl font-bold bg-gradient-to-r from-pink-500 via-orange-500 to-yellow-500 bg-clip-text text-transparent mb-2">
+                    <h1 className="text-3xl font-bold bg-gradient-to-r from-pink-500 via-rose-500 to-orange-500 bg-clip-text text-transparent mb-2">
                         Sweet Treats
                     </h1>
                     <p className="text-pink-600 font-medium">Login to your sweet account</p>
@@ -119,7 +119,7 @@ const Login: React.FC = () => {
                     <button 
                         type="submit" 
                         disabled={isLoading}
-                        className="w-full bg-gradient-to-r from-pink-500 via-orange-500 to-yellow-500 hover:from-pink-600 hover:via-orange-600 hover:to-yellow-600 disabled:from-pink-300 disabled:via-orange-300 disabled:to-yellow-300 disabled:cursor-not-allowed text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-pink-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                        className="w-full bg-gradient-to-r from-pink-500 via-rose-500 to-orange-500 hover:from-pink-600 hover:via-rose-600 hover:to-orange-600 disabled:from-pink-300 disabled:via-rose-300 disabled:to-orange-300 disabled:cursor-not-allowed text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-pink-300 shadow-lg hover:shadow-xl transform hover:scale-105"
                     >
                         {isLoading ? (
                             <div className="flex items-center justify-center">

@@ -8,6 +8,7 @@ export interface ISweet {
   description?: string;
   createdAt: Date;
   updatedAt: Date;
+  imageUrl?: string;
 }
 
 export interface SweetDocument extends ISweet, Document {

@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, it, beforeEach, expect, vi } from 'vitest';
+import { describe, it, beforeEach, expect } from 'vitest';
 import Login from '../../pages/login';
 import { renderWithRouter } from '../utils/testHelpers';
 

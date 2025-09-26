@@ -345,7 +345,7 @@ const UserDashboard: React.FC = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-pink-100 via-orange-50 to-yellow-100 flex items-center justify-center">
+            <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-orange-50 flex items-center justify-center">
                 <div className="text-center">
                     <div className="text-6xl mb-4 animate-spin">🍭</div>
                     <p className="text-pink-600 font-semibold">Loading sweet treats...</p>
@@ -356,7 +356,7 @@ const UserDashboard: React.FC = () => {
 
     if (error) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-pink-100 via-orange-50 to-yellow-100 flex items-center justify-center p-4">
+            <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-orange-50 flex items-center justify-center p-4">
                 <div className="bg-white rounded-2xl shadow-xl p-8 text-center max-w-md">
                     <div className="text-6xl mb-4">😔</div>
                     <h2 className="text-2xl font-bold text-red-600 mb-4">Oops!</h2>
@@ -373,7 +373,7 @@ const UserDashboard: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-pink-100 via-orange-50 to-yellow-100 p-4">
+        <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-orange-50 p-4">
             {/* Top Navigation Bar */}
             <div className="fixed top-4 left-4 right-4 z-40 flex justify-between items-center">
                 {/* Welcome Message */}
@@ -388,7 +388,7 @@ const UserDashboard: React.FC = () => {
                     {/* Cart Button */}
                     <button
                         onClick={() => setIsCartOpen(true)}
-                        className="bg-pink-500 hover:bg-pink-600 text-white p-3 rounded-full shadow-lg transition-all duration-200 transform hover:scale-110"
+                        className="bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white p-3 rounded-full shadow-lg transition-all duration-200 transform hover:scale-110"
                     >
                         <div className="relative">
                             🛒
@@ -494,7 +494,7 @@ const UserDashboard: React.FC = () => {
                                     <button
                                         onClick={handleCheckout}
                                         disabled={isCheckingOut}
-                                        className="w-full bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 disabled:from-pink-300 disabled:to-orange-300 text-white font-bold py-3 px-4 rounded-lg transition-all duration-200"
+                                        className="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 disabled:from-pink-300 disabled:to-rose-300 text-white font-bold py-3 px-4 rounded-lg transition-all duration-200"
                                     >
                                         {isCheckingOut ? (
                                             <span className="flex items-center justify-center">
@@ -517,7 +517,7 @@ const UserDashboard: React.FC = () => {
                 {/* Header */}
                 <div className="bg-white rounded-2xl shadow-xl p-6 mb-6 border-4 border-pink-200">
                     <div className="text-center mb-6">
-                        <h1 className="text-4xl font-bold bg-gradient-to-r from-pink-500 via-orange-500 to-yellow-500 bg-clip-text text-transparent mb-2">
+                        <h1 className="text-4xl font-bold bg-gradient-to-r from-pink-500 via-rose-500 to-orange-500 bg-clip-text text-transparent mb-2">
                             🍯 Sweet Shop Dashboard 🍰
                         </h1>
                         <p className="text-pink-600">Discover our delicious collection of treats!</p>
@@ -540,7 +540,7 @@ const UserDashboard: React.FC = () => {
                             <button
                                 type="submit"
                                 disabled={searchLoading}
-                                className="px-6 py-3 bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 disabled:from-pink-300 disabled:to-orange-300 text-white font-bold rounded-r-xl transition-all duration-200"
+                                className="px-6 py-3 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 disabled:from-pink-300 disabled:to-rose-300 text-white font-bold rounded-r-xl transition-all duration-200"
                             >
                                 {searchLoading ? '⏳' : '🔍'}
                             </button>

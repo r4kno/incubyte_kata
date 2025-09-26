@@ -91,7 +91,7 @@ const Register: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-green-100 via-blue-50 to-purple-100 flex items-center justify-center p-4 relative overflow-hidden">
+        <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-orange-50 flex items-center justify-center p-4 relative overflow-hidden">
             {/* Sweet background decorations */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-10 left-10 text-6xl animate-bounce" style={{ animationDelay: '0s' }}>🧁</div>
@@ -104,14 +104,14 @@ const Register: React.FC = () => {
                 <div className="absolute top-1/4 left-3/4 text-4xl animate-bounce" style={{ animationDelay: '3.5s' }}>🧁</div>
             </div>
             
-            <div className="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md relative z-10 border-4 border-green-200">
+            <div className="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md relative z-10 border-4 border-pink-200">
                 {/* Logo/Header */}
                 <div className="text-center mb-8">
                     <div className="text-6xl mb-4">🎂</div>
-                    <h1 className="text-3xl font-bold bg-gradient-to-r from-green-500 via-blue-500 to-purple-500 bg-clip-text text-transparent mb-2">
+                    <h1 className="text-3xl font-bold bg-gradient-to-r from-pink-500 via-rose-500 to-orange-500 bg-clip-text text-transparent mb-2">
                         Join Sweet Treats
                     </h1>
-                    <p className="text-green-600 font-medium">Create your sweet account</p>
+                    <p className="text-pink-600 font-medium">Create your sweet account</p>
                     <div className="flex justify-center mt-2 space-x-1">
                         <span className="text-lg">🧁</span>
                         <span className="text-lg">🍰</span>
@@ -121,7 +121,7 @@ const Register: React.FC = () => {
                 
                 <form onSubmit={handleSubmit} className="space-y-5">
                     <div>
-                        <label htmlFor="name" className="block text-sm font-semibold text-green-700 mb-2 flex items-center">
+                        <label htmlFor="name" className="block text-sm font-semibold text-pink-700 mb-2 flex items-center">
                             <span className="mr-2">👤</span>
                             Full Name
                         </label>
@@ -132,13 +132,13 @@ const Register: React.FC = () => {
                             onChange={(e) => setName(e.target.value)}
                             required
                             minLength={2}
-                            className="w-full px-4 py-3 border-2 border-green-200 rounded-xl focus:ring-2 focus:ring-green-400 focus:border-green-400 transition-all outline-none bg-green-50/30 hover:bg-green-50/50"
+                            className="w-full px-4 py-3 border-2 border-pink-200 rounded-xl focus:ring-2 focus:ring-pink-400 focus:border-pink-400 transition-all outline-none bg-pink-50/30 hover:bg-pink-50/50"
                             placeholder="Enter your sweet name"
                         />
                     </div>
 
                     <div>
-                        <label htmlFor="email" className="block text-sm font-semibold text-green-700 mb-2 flex items-center">
+                        <label htmlFor="email" className="block text-sm font-semibold text-pink-700 mb-2 flex items-center">
                             <span className="mr-2">📧</span>
                             Email Address
                         </label>
@@ -148,13 +148,13 @@ const Register: React.FC = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
-                            className="w-full px-4 py-3 border-2 border-green-200 rounded-xl focus:ring-2 focus:ring-green-400 focus:border-green-400 transition-all outline-none bg-green-50/30 hover:bg-green-50/50"
+                            className="w-full px-4 py-3 border-2 border-pink-200 rounded-xl focus:ring-2 focus:ring-pink-400 focus:border-pink-400 transition-all outline-none bg-pink-50/30 hover:bg-pink-50/50"
                             placeholder="your-email@sweetshop.com"
                         />
                     </div>
                     
                     <div>
-                        <label htmlFor="password" className="block text-sm font-semibold text-green-700 mb-2 flex items-center">
+                        <label htmlFor="password" className="block text-sm font-semibold text-pink-700 mb-2 flex items-center">
                             <span className="mr-2">🔒</span>
                             Password
                         </label>
@@ -165,13 +165,13 @@ const Register: React.FC = () => {
                             onChange={(e) => setPassword(e.target.value)}
                             required
                             minLength={6}
-                            className="w-full px-4 py-3 border-2 border-green-200 rounded-xl focus:ring-2 focus:ring-green-400 focus:border-green-400 transition-all outline-none bg-green-50/30 hover:bg-green-50/50"
+                            className="w-full px-4 py-3 border-2 border-pink-200 rounded-xl focus:ring-2 focus:ring-pink-400 focus:border-pink-400 transition-all outline-none bg-pink-50/30 hover:bg-pink-50/50"
                             placeholder="Create a strong password (min 6 chars)"
                         />
                     </div>
 
                     <div>
-                        <label htmlFor="confirmPassword" className="block text-sm font-semibold text-green-700 mb-2 flex items-center">
+                        <label htmlFor="confirmPassword" className="block text-sm font-semibold text-pink-700 mb-2 flex items-center">
                             <span className="mr-2">🔐</span>
                             Confirm Password
                         </label>
@@ -182,24 +182,24 @@ const Register: React.FC = () => {
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             required
                             minLength={6}
-                            className="w-full px-4 py-3 border-2 border-green-200 rounded-xl focus:ring-2 focus:ring-green-400 focus:border-green-400 transition-all outline-none bg-green-50/30 hover:bg-green-50/50"
+                            className="w-full px-4 py-3 border-2 border-pink-200 rounded-xl focus:ring-2 focus:ring-pink-400 focus:border-pink-400 transition-all outline-none bg-pink-50/30 hover:bg-pink-50/50"
                             placeholder="Confirm your password"
                         />
                     </div>
 
                     {/* Role info (read-only since it's always 'user') */}
-                    <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-3">
-                        <div className="flex items-center text-sm text-blue-700">
+                    <div className="bg-orange-50 border-2 border-orange-200 rounded-xl p-3">
+                        <div className="flex items-center text-sm text-orange-700">
                             <span className="mr-2">👥</span>
                             <span className="font-semibold">Account Type:</span>
-                            <span className="ml-2 bg-blue-100 px-2 py-1 rounded-full text-xs font-bold">Customer</span>
+                            <span className="ml-2 bg-orange-100 px-2 py-1 rounded-full text-xs font-bold">Customer</span>
                         </div>
                     </div>
                     
                     <button 
                         type="submit" 
                         disabled={isLoading}
-                        className="w-full bg-gradient-to-r from-green-500 via-blue-500 to-purple-500 hover:from-green-600 hover:via-blue-600 hover:to-purple-600 disabled:from-green-300 disabled:via-blue-300 disabled:to-purple-300 disabled:cursor-not-allowed text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-green-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                        className="w-full bg-gradient-to-r from-pink-500 via-rose-500 to-orange-500 hover:from-pink-600 hover:via-rose-600 hover:to-orange-600 disabled:from-pink-300 disabled:via-rose-300 disabled:to-orange-300 disabled:cursor-not-allowed text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-pink-300 shadow-lg hover:shadow-xl transform hover:scale-105"
                     >
                         {isLoading ? (
                             <div className="flex items-center justify-center">
@@ -218,7 +218,7 @@ const Register: React.FC = () => {
                 <div className="mt-8 text-center space-y-3">
                     <div className="flex items-center justify-center space-x-2 text-sm text-gray-600">
                         <span>Already have a sweet account?</span>
-                        <a href="/login" className="text-green-600 hover:text-green-800 font-medium">
+                        <a href="/login" className="text-pink-600 hover:text-pink-800 font-medium">
                             Login here! 🍭
                         </a>
                     </div>

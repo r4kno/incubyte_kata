@@ -40,14 +40,15 @@ router.post('/', authenticateToken, requireAdmin, createSweetValidation, async (
       });
     }
 
-    const { name, category, price, quantity, description } = req.body;
+    const { name, category, price, quantity, description, imageUrl } = req.body;
 
     const sweet = await Sweet.create({
       name,
       category,
       price,
       quantity,
-      description
+      description,
+      imageUrl
     });
 
     res.status(201).json({

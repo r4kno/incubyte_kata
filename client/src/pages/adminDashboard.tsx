@@ -489,10 +489,10 @@ const AdminDashboard: React.FC = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-50 to-indigo-100 flex items-center justify-center">
+            <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-orange-50 flex items-center justify-center">
                 <div className="text-center">
                     <div className="text-6xl mb-4 animate-spin">👑</div>
-                    <p className="text-purple-600 font-semibold">Loading admin dashboard...</p>
+                    <p className="text-pink-600 font-semibold">Loading admin dashboard...</p>
                 </div>
             </div>
         );
@@ -500,14 +500,14 @@ const AdminDashboard: React.FC = () => {
 
     if (error) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
+            <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-orange-50 flex items-center justify-center p-4">
                 <div className="bg-white rounded-2xl shadow-xl p-8 text-center max-w-md">
                     <div className="text-6xl mb-4">😔</div>
                     <h2 className="text-2xl font-bold text-red-600 mb-4">Oops!</h2>
                     <p className="text-gray-700 mb-6">{error}</p>
                     <button
                         onClick={() => window.location.href = '/login'}
-                        className="bg-purple-500 hover:bg-purple-600 text-white px-6 py-2 rounded-lg transition-colors"
+                        className="bg-pink-500 hover:bg-pink-600 text-white px-6 py-2 rounded-lg transition-colors"
                     >
                         Go to Login
                     </button>
@@ -517,17 +517,17 @@ const AdminDashboard: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-50 to-indigo-100 p-4">
+        <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-orange-50 p-4">
             {/* Main Content */}
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
-                <div className="bg-white rounded-2xl shadow-xl p-6 mb-6 border-4 border-purple-200">
+                <div className="bg-white rounded-2xl shadow-xl p-6 mb-6 border-4 border-pink-200">
                     <div className="flex justify-between items-center mb-6">
                         <div>
-                            <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-500 via-blue-500 to-indigo-500 bg-clip-text text-transparent mb-2">
+                            <h1 className="text-4xl font-bold bg-gradient-to-r from-pink-500 via-rose-500 to-orange-500 bg-clip-text text-transparent mb-2">
                                 Admin Dashboard
                             </h1>
-                            <p className="text-purple-600">Welcome back, {getAdminName()}! Manage your sweet shop inventory.</p>
+                            <p className="text-pink-600">Welcome back, {getAdminName()}! Manage your sweet shop inventory.</p>
                         </div>
                         <div className="flex gap-2">
                             <button
@@ -535,7 +535,7 @@ const AdminDashboard: React.FC = () => {
                                     resetForm();
                                     setIsAddModalOpen(true);
                                 }}
-                                className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white px-4 py-2 rounded-lg font-bold transition-all duration-200 transform hover:scale-105"
+                                className="bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white px-4 py-2 rounded-lg font-bold transition-all duration-200 transform hover:scale-105"
                             >
                                 ➕ Add Sweet
                             </button>
@@ -557,34 +557,34 @@ const AdminDashboard: React.FC = () => {
                                     placeholder="Search for sweets by name..."
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
-                                    className="w-full px-4 py-3 pl-10 border-2 border-purple-200 rounded-l-xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 outline-none bg-purple-50/30"
+                                    className="w-full px-4 py-3 pl-10 border-2 border-pink-200 rounded-l-xl focus:ring-2 focus:ring-pink-400 focus:border-pink-400 outline-none bg-pink-50/30"
                                 />
-                                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-purple-400">🔍</span>
+                                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-pink-400">🔍</span>
                             </div>
                             <button
                                 type="submit"
                                 disabled={searchLoading}
-                                className="px-6 py-3 bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 disabled:from-purple-300 disabled:to-indigo-300 text-white font-bold rounded-r-xl transition-all duration-200"
+                                className="px-6 py-3 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 disabled:from-pink-300 disabled:to-rose-300 text-white font-bold rounded-r-xl transition-all duration-200"
                             >
                                 {searchLoading ? '⏳' : '🔍'}
                             </button>
                             <button
                                 type="button"
                                 onClick={() => setIsSearchExpanded(!isSearchExpanded)}
-                                className="px-4 py-3 bg-purple-300 hover:bg-purple-400 text-white rounded-xl transition-colors"
+                                className="px-4 py-3 bg-pink-300 hover:bg-pink-400 text-white rounded-xl transition-colors"
                             >
                                 {isSearchExpanded ? '▲' : '▼'} Filters
                             </button>
                         </div>
 
                         {isSearchExpanded && (
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 bg-purple-50/50 rounded-xl border border-purple-200">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 bg-pink-50/50 rounded-xl border border-pink-200">
                                 <div>
-                                    <label className="block text-sm font-semibold text-purple-700 mb-2">🍭 Category</label>
+                                    <label className="block text-sm font-semibold text-pink-700 mb-2">🍭 Category</label>
                                     <select
                                         value={selectedCategory}
                                         onChange={(e) => setSelectedCategory(e.target.value)}
-                                        className="w-full px-3 py-2 border border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-purple-400 outline-none bg-white"
+                                        className="w-full px-3 py-2 border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-pink-400 outline-none bg-white"
                                     >
                                         <option value="">All Categories</option>
                                         {categories.map(category => (
@@ -596,7 +596,7 @@ const AdminDashboard: React.FC = () => {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-semibold text-purple-700 mb-2">💰 Min Price</label>
+                                    <label className="block text-sm font-semibold text-pink-700 mb-2">💰 Min Price</label>
                                     <input
                                         type="number"
                                         min="0"
@@ -604,12 +604,12 @@ const AdminDashboard: React.FC = () => {
                                         placeholder="0.00"
                                         value={minPrice}
                                         onChange={(e) => setMinPrice(e.target.value)}
-                                        className="w-full px-3 py-2 border border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-purple-400 outline-none bg-white"
+                                        className="w-full px-3 py-2 border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-pink-400 outline-none bg-white"
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-semibold text-purple-700 mb-2">💰 Max Price</label>
+                                    <label className="block text-sm font-semibold text-pink-700 mb-2">💰 Max Price</label>
                                     <input
                                         type="number"
                                         min="0"
@@ -617,7 +617,7 @@ const AdminDashboard: React.FC = () => {
                                         placeholder="999.99"
                                         value={maxPrice}
                                         onChange={(e) => setMaxPrice(e.target.value)}
-                                        className="w-full px-3 py-2 border border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-purple-400 outline-none bg-white"
+                                        className="w-full px-3 py-2 border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-pink-400 outline-none bg-white"
                                     />
                                 </div>
 
