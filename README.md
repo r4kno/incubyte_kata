@@ -192,7 +192,7 @@ npm run test:run
 
 # Run tests with coverage report
 npm run test:coverage
-
+```
 ## 📷 UI Screenshots
 
 ![Screenshot 1](Screenshots/Screenshot%202025-09-26%20173856.png)
@@ -208,7 +208,7 @@ npm run test:coverage
 ![Screenshot 6](Screenshots/Screenshot%202025-09-26%20183340.png)
 
 ![Screenshot 7](Screenshots/Screenshot%202025-09-26%20183350.png)
-```
+
 
 ## 📊 Test Coverage
 
